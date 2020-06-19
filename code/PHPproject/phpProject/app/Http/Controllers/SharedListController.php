@@ -50,15 +50,7 @@ class SharedListController extends Controller
  
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -69,13 +61,10 @@ class SharedListController extends Controller
     public function store(Request $request)
     {
         //
-        //return 111;
         $input = $request->except('_token');
+    
+        $result = Share::create(['user_share'=>$input['user_share'],'list_id'=>$input['list_id'],'complete_right'=>$input['complete_right'],'edit_right'=>$input['edit_right'],'accept'=>0]);
 
-        $result = Share::create([['user_share'=>$input['user_share'],'list_id'=>$input['list_id'],'delete_right'=>$input['edit_right'],'complete_right'=>$input['complete_right'],'edit_right'=>$input['edit_right'],'accept'=>0]]);
-
-        
-        
         if ($result){
             $data=[
                 'status'=>0,
@@ -89,52 +78,8 @@ class SharedListController extends Controller
         }
         return $data;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
+    
+    
     public function share($list_id)
     {
         $user = $user=session()->get('user'); 
@@ -144,5 +89,63 @@ class SharedListController extends Controller
                     ->where('myid',$user->id)
                     ->get();
         return view('share.create',['list_id'=>$list_id,'myfriends'=>$myfriends]);
+    }
+
+    public function message()
+    {
+        $user = $user=session()->get('user'); 
+        $messages = DB::table('share')
+                    ->join('list','list.list_id','=','share.list_id')
+                    ->join('user','user.id','=','list.user_id')
+                    ->select('list.*','nickname')
+                    ->where('user_share',$user->id)
+                    ->where('accept',0)
+                    ->get();
+        
+        return view('share.message',['messages'=>$messages]);
+    }
+
+    public function agree($list_id)
+    {
+        $user = $user=session()->get('user'); 
+        $result1 = DB::table('share')
+                  ->where('list_id','=',$list_id)
+                  ->where('user_share',$user->id)
+                  ->update(['accept'=>1]);
+        $result2 = DB::table('list')
+                  ->where('list_id','=',$list_id)
+                  ->update(['shared'=>1]);
+        if($result1 && $result2){
+            $data=[
+                'status'=>0,
+            ];
+        }else{
+            $data=[
+                'status'=>1,
+            ];
+                }
+        return $data;
+      
+    }
+
+    public function reject($list_id)
+    {
+        $user = $user=session()->get('user'); 
+        $result = DB::table('share')
+                  ->where('list_id','=',$list_id)
+                  ->where('user_share',$user->id)
+                  ->update(['accept'=>2]);
+       
+        if($result){
+            $data=[
+                'status'=>0,
+            ];
+        }else{
+            $data=[
+                'status'=>1,
+            ];
+                }
+        return $data;
+      
     }
 }

@@ -23,14 +23,13 @@ Route::post('/ok', function () {
 });
 
 //用户登陆页面
-Route::any('/user/login',function(){
-    return view('user.login');
-});
+Route::any('/user/login','UserController@login');
+
+Route::any('/user/logi','UserController@logi');
 
 //用户注册页面
-Route::get('/user/register',function(){
-    return view('user.register');
-});
+Route::get('/user/register','UserController@register');
+
 
 //存储注册的新用户
 Route::post('/user/store','UserController@store');
@@ -47,8 +46,6 @@ Route::group(['middleware'=>'isLogin'],function(){
     Route::get('/user/logout','UserController@logout');
     //资源路由 我的列表
     Route::resource('/list/myList','ListController');
-
-    
 
     //资源路由 共享列表
     Route::resource('/list/sharedList','SharedListController');
@@ -73,6 +70,9 @@ Route::group(['middleware'=>'isLogin'],function(){
     
     Route::get('/list/sharedList/share/{id}','SharedListController@share');
     //Route::post('/list/sharedList/store','SharedListController@store');
+    Route::get('/message','SharedListController@message');
+    Route::post('/message/agree/{id}','SharedListController@agree');
+    Route::post('/message/reject/{id}','SharedListController@reject');
     
 });
 

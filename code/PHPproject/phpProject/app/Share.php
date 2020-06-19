@@ -13,8 +13,12 @@ class Share extends Model
     public $primaryKey = 'share_id';
 
     protected $fillable = [
-        'share_id', 'user_share','list_id','delete_right','complete_right','accept','edut_right'
+        'share_id', 'user_share','list_id','delete_right','complete_right','accept','edit_right'
     ];
 
     public $timestamps = false;
+    
+    public function getS(){
+        return $this->table;
+    }
 }

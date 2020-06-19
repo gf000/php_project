@@ -13,7 +13,6 @@ class UserController extends Controller
     public function store(Request $request){
         //1.获取客户端提交的表单数据
         $input = $request->except('_token');
-        //dd($input);
 
         //2.验证密码是否两次一样
         if($input['password']!=$input['comfirmPassword']){
@@ -40,7 +39,6 @@ class UserController extends Controller
         $result = User::create(['nickname'=>$input['nickname'],'email'=>$input['email'],'password'=>$input['password']]);
         if ($result){
             //或者可以直接跳转到用户主界面，不用跳转到登录界面了
-            //……………………………………………………
             return redirect ('/user/login');
         }else{
             return back();
@@ -92,5 +90,17 @@ class UserController extends Controller
         session()->flush();
         //跳转到登陆页面
         return redirect('user/login');
+    }
+
+    public function login(){
+        return view('user.login');
+    }
+
+    public function register(){
+        return view('user.register');
+    }
+
+    public function logi(){
+        return view('user.login');
     }
 }

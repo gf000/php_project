@@ -24,12 +24,11 @@
   <div class="layui-form-item" style="margin:50px;">
     <label class="layui-form-label">Shared with</label>
     <div class="layui-input-block">
-      <select name="user_share" lay-verify="required">
-        <option value=""></option>
-        @foreach($myfriends as $myfriend)  
-        <option value="{{$myfriend->friend_id}}">{{$myfriend->nickname}}</option>
+     
+        @foreach($myfriends as $myfriend) 
+        <input type="radio" name="user_share" value="{{$myfriend->friend_id}}" title="{{$myfriend->nickname}}">
         @endforeach
-      </select>
+     
     </div>
   </div>
 
@@ -37,11 +36,8 @@
   <div class="layui-form-item" style="margin:50px;">
     <label class="layui-form-label">Has Edit Right</label>
     <div class="layui-input-block">
-      <select name="edit_right" lay-verify="required">
-        <option value=""></option>
-        <option value="1">yes</option>
-        <option value="0">no</option>
-      </select>
+    <input type="radio" name="edit_right" value="1" title="yes">
+    <input type="radio" name="edit_right" value="0" title="no" checked>  
     </div>
   </div>
 
@@ -49,19 +45,10 @@
   <div class="layui-form-item" style="margin:50px;">
     <label class="layui-form-label">Has Complete Right</label>
     <div class="layui-input-block">
-      <select name="complete_right" lay-verify="required">
-        <option value=""></option>
-        <option value="1">yes</option>
-        <option value="0">no</option>
-        
-      </select>
+    <input type="radio" name="complete_right" value="1" title="yes">
+    <input type="radio" name="complete_right" value="0" title="no" checked>  
     </div>
   </div>
-
-
-
-
-  
 
   <div class="layui-form-item">
     <div class="layui-input-block" style="position:relative;left:15%;">

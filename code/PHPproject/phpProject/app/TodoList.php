@@ -17,4 +17,10 @@ class TodoList extends Model
     ];
 
     public $timestamps = false;
+
+    
+    public function getT()
+    {
+        return $this->table;
+    }
 }

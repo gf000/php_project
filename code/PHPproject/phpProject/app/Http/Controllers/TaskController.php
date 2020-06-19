@@ -13,8 +13,6 @@ class TaskController extends Controller
     {
         
         $user=session()->get('user'); 
-        //$mylists = User::find($user['id'])->contacts();
-        //$mylists = User::find(1)->contacts();
         $tasks = DB::table('task')
                       ->select('task.*')
                       ->where('list_id',$list_id)
@@ -31,9 +29,7 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        //
-        
-        
+        //   
         $input = $request->except('_token');
         $result = Task::create(['content'=>$input['content'],'complete'=>'0','list_id'=>$input['list_id']]);
         if ($result){
@@ -54,14 +50,12 @@ class TaskController extends Controller
     {
         //
         $task = Task::find($id);
-        //return $list->comment;
         return view('task.edit',['task'=>$task]);
     }
 
     public function update(Request $request, $id)
     {
         //根据id获取要修改的记录
-        //return $id;
         $task = Task::find($id);
         //获取要修改的title和comment
         $content = $request->input('content');
@@ -106,9 +100,7 @@ class TaskController extends Controller
 
     public function destroyAll()
     {
-        //
-        //return 111;
-        
+        //        
         $task = DB::table('task')
                    ->select('task_id')
                    ->where('complete','=','1')
@@ -165,9 +157,6 @@ class TaskController extends Controller
     public function completeAll()
     {
         //
-        //return 111;
-        
-
         $result = DB::table('task')
                   ->where('complete','=',0)
                   ->update(['complete'=>1]);
@@ -189,8 +178,7 @@ class TaskController extends Controller
     {
         
         $user=session()->get('user'); 
-        //$mylists = User::find($user['id'])->contacts();
-        //$mylists = User::find(1)->contacts();
+        
         $tasks = DB::table('task')
                       ->select('task.*')
                       ->where('list_id',$list_id)

@@ -12,8 +12,6 @@ class FriendController extends Controller
     {
         //
         $user=session()->get('user'); 
-        //$mylists = User::find($user['id'])->contacts();
-        //$mylists = User::find(1)->contacts();
         $myfriends = DB::table('friend')
                     ->join('user','friend_id','=','user.id')
                     ->select('friend.*','nickname')

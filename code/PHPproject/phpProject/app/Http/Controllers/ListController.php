@@ -19,8 +19,6 @@ class ListController extends Controller
     {
         //
         $user=session()->get('user'); 
-        //$mylists = User::find($user['id'])->contacts();
-        //$mylists = User::find(1)->contacts();
         $mylists = DB::table('list')
                       ->select('list.*')
                       ->where('user_id',$user['id'])
@@ -84,16 +82,7 @@ class ListController extends Controller
         return $data;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -105,7 +94,6 @@ class ListController extends Controller
     {
         //
         $list = TodoList::find($id);
-        //return $list->comment;
         return view('list.edit',['list'=>$list]);
     }
 

@@ -16,4 +16,8 @@ class Task extends Model
     ];
 
     public $timestamps = false;
+
+    public function getTa(){
+        return $this->table;
+    }
 }
