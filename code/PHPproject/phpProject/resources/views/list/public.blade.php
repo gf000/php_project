@@ -17,11 +17,25 @@
     
     function daytime(){
         document.getElementById("body").style.background = "#e2e2e2";
+        sessionStorage.setItem("mode","#e2e2e2");
     }
 
     function night(){
         document.getElementById("body").style.background = "#393D49";
+        sessionStorage.setItem("mode","#393D49");
     }
+
+    layui.use(['layer'], function(){
+        $=layui.jquery,
+        layer=layui.layer,
+        
+
+        $(function(){
+        var getMode = sessionStorage.getItem("mode");
+        document.getElementById("body").style.background = getMode;
+
+        })
+        })
 </script>
 
 <body class="layui-layout-body" id="body">
@@ -81,7 +95,7 @@
   
   <div class="layui-footer">
     <!-- 底部固定区域 -->
-    © supinfo.com - 底部固定区域
+    © supinfo.com
   </div>
 </div>
 

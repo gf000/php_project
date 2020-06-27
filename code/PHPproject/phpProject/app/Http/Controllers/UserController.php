@@ -24,10 +24,10 @@ class UserController extends Controller
         $user_email = User::where('email',$input['email'])->first();
 
         if($user_nickname){
-            return redirect('user/login')->with('errors','The nickname has already been registered');
+            return redirect('user/register')->with('errors','The nickname has already been registered');
         }
         if($user_email){
-            return redirect('user/login')->with('errors',"The email has already been registered");
+            return redirect('user/register')->with('errors',"The email has already been registered");
         }
 
         //给密码加密

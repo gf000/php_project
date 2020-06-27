@@ -34,12 +34,12 @@
         });
     }
 
-    function delAll(){
+    function delAll($list_id){
         layui.use(['layer'], function(){
         $=layui.jquery,
         layer=layui.layer,
         layer.confirm('Are you sure you want to delete them all?',function(index){
-            $.post('/list/task/deleteAll',{"_token":"{{csrf_token()}}"},function(data){
+            $.post('/list/task/deleteAll/'+$list_id,{"_token":"{{csrf_token()}}"},function(data){
                 //console.log("jinlaile");
                 if(data.status == 0){
                     
@@ -135,12 +135,12 @@
         
     }
     
-    function completeAll(){
+    function completeAll($list_id){
         layui.use(['layer'], function(){
         $=layui.jquery,
         layer=layui.layer,
         layer.confirm('Are you sure these tasks have been completed?',function(index){
-            $.post('/list/task/completeAll',{"_token":"{{csrf_token()}}"},function(data){
+            $.post('/list/task/completeAll/'+$list_id,{"_token":"{{csrf_token()}}"},function(data){
                 //console.log("jinlaile");
                 if(data.status == 0){ 
                     location.reload();
@@ -234,7 +234,7 @@
     <!--显示未完成task-->
     <div class="layui-tab-item" id="uncomplete">
         <div style="margin-top:50px;margin-left:300px">
-            <button type="button" class="layui-btn layui-btn-warm layui-btn-radius" style="width:150px;margin-right:100px" onclick="completeAll()">
+            <button type="button" class="layui-btn layui-btn-warm layui-btn-radius" style="width:150px;margin-right:100px" onclick="completeAll({{$list_id}})">
                 <i class="layui-icon">&#xe605;</i> Check Off All
             </button>
         </div>
@@ -263,7 +263,7 @@
     <div class="layui-tab-item" id="complete">
         <div class="layui-tab-item layui-show">
             <div style="margin-top:50px;margin-left:300px">
-            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" style="width:150px;" onclick="delAll()">
+            <button type="button" class="layui-btn layui-btn-danger layui-btn-radius" style="width:150px;" onclick="delAll({{$list_id}})">
                 <i class="layui-icon">&#xe640;</i> Delete All
             </button>
         </div>

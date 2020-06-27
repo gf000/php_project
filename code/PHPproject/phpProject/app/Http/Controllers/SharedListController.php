@@ -28,6 +28,7 @@ class SharedListController extends Controller
                       ->where('accept','=',1)
                       ->get();
         
+        $progress=[];
         foreach($sharedlists as $sharedlist){
             $all = DB::table('task')
                ->where('list_id',"=",$sharedlist->list_id)

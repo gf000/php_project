@@ -98,16 +98,18 @@ class TaskController extends Controller
         return $data;
     }
 
-    public function destroyAll()
+    public function destroyAll($list_id)
     {
         //        
         $task = DB::table('task')
                    ->select('task_id')
                    ->where('complete','=','1')
+                   ->where('list_id','=',$list_id)
                    ->get();
 
         $result = DB::table('task')
                   ->where('complete','=',1)
+                  ->where('list_id','=',$list_id)
                   ->delete();
 
         if($result){
